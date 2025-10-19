@@ -1,0 +1,5 @@
+# Root aggregator for Render and other PaaS detectors
+# Delegates to the backend requirements list
+-r server/requirements.txt
+
+
