@@ -1,0 +1,37 @@
+# Render deployment configuration
+# This file tells Render how to deploy your application
+
+services:
+  # Backend API Service
+  - type: web
+    name: ikarus-backend
+    env: python
+    plan: free
+    buildCommand: |
+      cd server
+      pip install -r requirements.txt
+    startCommand: |
+      cd server
+      python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: CORS_ORIGINS
+        value: https://ikarus-frontend.onrender.com
+
+  # Frontend Static Site
+  - type: web
+    name: ikarus-frontend
+    env: static
+    plan: free
+    buildCommand: |
+      cd web
+      npm install
+      npm run build
+    staticPublishPath: web/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://ikarus-backend.onrender.com

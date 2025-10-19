@@ -1,0 +1,24 @@
+# Netlify deployment configuration
+# This file tells Netlify how to build and deploy your frontend
+
+[build]
+  publish = "web/dist"
+  command = "cd web && npm install && npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  VITE_API_URL = "https://your-backend-url.fly.dev"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-url.fly.dev/api/:splat"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
