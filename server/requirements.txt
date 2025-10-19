@@ -1,0 +1,51 @@
+# Core FastAPI dependencies - Latest stable versions
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+python-dotenv==1.0.1
+python-multipart==0.0.12
+
+# Vector search and embeddings - CPU-only versions
+pinecone-client==3.2.2
+faiss-cpu==1.8.0
+sentence-transformers==3.3.1
+transformers==4.46.3
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+torchaudio==2.5.1+cpu
+numpy==2.2.0
+
+# Computer vision - CPU-only
+pillow==11.0.0
+opencv-python-headless==4.10.0.84
+
+# Data processing - Optimized versions
+pandas==2.2.3
+scikit-learn==1.6.0
+
+# HTTP client - Latest stable
+httpx==0.28.1
+requests==2.32.3
+
+# LangChain (optional for OpenAI) - Latest stable
+langchain==0.3.7
+langchain-openai==0.2.8
+
+# Development and testing - Latest stable
+pytest==8.3.4
+pytest-asyncio==0.24.0
+black==24.10.0
+ruff==0.8.4
+mypy==1.13.0
+
+# Utilities - Latest stable
+aiofiles==24.1.0
+gdown==5.2.0
+
+# Additional optimizations for fast cold start
+# Lightweight alternatives for better performance
+typing-extensions==4.12.2
+anyio==4.7.0
+sniffio==1.3.1
+h11==0.14.0
+wsproto==1.2.0

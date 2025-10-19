@@ -1,0 +1,49 @@
+# Core FastAPI dependencies
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+python-multipart
+
+# Vector search and embeddings
+pinecone-client
+faiss-cpu
+sentence-transformers
+transformers
+torch
+torchvision
+torchaudio
+numpy
+
+# Computer vision
+pillow
+opencv-python-headless
+
+# Data processing
+pandas
+scikit-learn
+
+# HTTP client
+httpx
+requests
+
+# LangChain (optional for OpenAI)
+langchain
+langchain-openai
+
+# Development and testing
+pytest
+pytest-asyncio
+black
+ruff
+mypy
+
+# Utilities
+aiofiles
+
+# Additional optimizations for fast cold start
+typing-extensions
+anyio
+sniffio
+h11
+wsproto

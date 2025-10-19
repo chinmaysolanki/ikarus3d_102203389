@@ -1,0 +1,60 @@
+name: Quick Checks
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  quick-checks:
+    name: Quick Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Set up Node.js 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: web/package-lock.json
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install -e ".[dev]"
+    
+    - name: Install Node.js dependencies
+      run: |
+        cd web
+        npm ci
+    
+    - name: Run Python linting
+      run: |
+        ruff check server/ tests/
+        black --check server/ tests/
+    
+    - name: Run TypeScript checks
+      run: |
+        cd web
+        npm run typecheck
+        npm run lint
+        npm run format:check
+    
+    - name: Run Python tests
+      run: |
+        python -m pytest tests/ -v
+    
+    - name: Quick smoke test
+      run: |
+        python3 smoke_test.py
+      timeout-minutes: 3
