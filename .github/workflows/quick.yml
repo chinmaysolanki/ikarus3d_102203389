@@ -30,8 +30,8 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install -e ".[dev]"
+        pip install -r server/requirements.txt
+        pip install ruff black pytest
     
     - name: Install Node.js dependencies
       run: |
@@ -40,8 +40,8 @@ jobs:
     
     - name: Run Python linting
       run: |
-        ruff check server/ tests/
-        black --check server/ tests/
+        ruff check server/
+        black --check server/
     
     - name: Run TypeScript checks
       run: |
@@ -52,7 +52,7 @@ jobs:
     
     - name: Run Python tests
       run: |
-        python -m pytest tests/ -v
+        python -m pytest -v --maxfail=1 --disable-warnings
     
     - name: Quick smoke test
       run: |

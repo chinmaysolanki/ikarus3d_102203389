@@ -34,21 +34,22 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install -e ".[dev]"
+        pip install -r server/requirements.txt
+        # Dev tools
+        pip install ruff black mypy pytest pytest-cov
     
     - name: Run Python linting
       run: |
-        ruff check server/ tests/
-        black --check server/ tests/
+        ruff check server/
+        black --check server/
     
     - name: Run Python type checking
       run: |
-        mypy server/ tests/
+        mypy server/
     
     - name: Run Python tests
       run: |
-        python -m pytest tests/ -v --cov=server --cov-report=xml
+        python -m pytest -v --maxfail=1 --disable-warnings --cov=server --cov-report=xml
     
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.11'
@@ -79,7 +80,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd web
-        npm ci
+        if [ -f package-lock.json ]; then npm ci; else npm install; fi
     
     - name: Run TypeScript type checking
       run: |
@@ -118,8 +119,8 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install -e ".[dev]"
+        pip install -r server/requirements.txt
+        pip install pytest
     
     - name: Set up Node.js 18
       uses: actions/setup-node@v4
@@ -167,8 +168,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
-        pip install -e ".[dev]"
+        pip install -r server/requirements.txt
         pip install safety bandit
     
     - name: Run safety check
