@@ -78,14 +78,39 @@ A smart furniture recommendation system that combines semantic search, machine l
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Run Locally
+## 🚀 Quick Start
+
+### ⚡ Super Quick Start (5 minutes)
+```bash
+# Clone and set up everything automatically
+git clone https://github.com/chinmaysolanki/ikarus3d_102203389.git
+cd ikarus3d_102203389
+chmod +x deploy.sh
+./deploy.sh setup
+./deploy.sh start
+```
+
+### 📖 Detailed Setup
+For detailed setup instructions, see our comprehensive guides:
+
+- **[🚀 QUICK_START.md](QUICK_START.md)** - 5-minute setup guide
+- **[📚 DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete deployment documentation
+- **[🐳 Docker Setup](docker-compose.yml)** - Containerized deployment
+
+### 🌐 Access Your Application
+- **Frontend**: http://localhost:3001
+- **Backend API**: http://localhost:8000  
+- **API Documentation**: http://localhost:8000/api/docs
+- **Health Check**: http://localhost:8000/health
+
+## 🏠 Run Locally (Manual Setup)
 
 ### Option 1: FAISS Only (No API Keys Required)
 
 ```bash
 # Clone and setup
-git clone <repository-url>
-cd ai-furniture-recs
+git clone https://github.com/chinmaysolanki/ikarus3d_102203389.git
+cd ikarus3d_102203389
 
 # Install dependencies
 make deps
@@ -96,7 +121,7 @@ make dev-backend
 
 # In another terminal, start frontend
 make dev-frontend
-# Frontend runs on http://localhost:5173
+# Frontend runs on http://localhost:3001
 
 # Test everything
 make smoke
@@ -458,25 +483,41 @@ make fetch-data
 
 ## 🚀 Deployment
 
-### Docker (Optional)
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY . .
-RUN pip install -r server/requirements.txt
-RUN cd web && npm install && npm run build
-EXPOSE 8000
-CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8000"]
+### 📚 Comprehensive Deployment Guide
+For complete deployment instructions, see **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** which covers:
+
+- **Local Development**: Manual setup and automated scripts
+- **Docker Deployment**: Containerized deployment with Docker Compose
+- **Cloud Deployment**: AWS, GCP, Azure deployment guides
+- **Production Configuration**: SSL, monitoring, performance optimization
+- **Monitoring & Maintenance**: Health checks, backups, troubleshooting
+
+### ⚡ Quick Deployment Commands
+```bash
+# Automated deployment
+./deploy.sh setup    # Install dependencies
+./deploy.sh start    # Start services
+./deploy.sh deploy   # Deploy to production
+./deploy.sh health   # Check service health
 ```
 
-### Production Environment Variables
+### 🐳 Docker Deployment
+```bash
+# Development
+docker-compose up --build
+
+# Production
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+### 🔧 Production Environment Variables
+See **[env.production.template](env.production.template)** for complete configuration options:
+
 ```bash
 # Required
-FAISS_INDEX_PATH=/app/data/faiss_index.bin
-PRODUCT_DATA_PATH=/app/data/products.csv
-
-# Optional
+OPENAI_API_KEY=your_key
 PINECONE_API_KEY=your_key
+SECRET_KEY=your_secret_key
 OPENAI_API_KEY=your_key
 HF_HOME=/app/cache/huggingface
 ```
